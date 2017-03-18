@@ -11,7 +11,7 @@ import numpy as np
 
 if __name__ == "__main__":
     
-    GITHUB_TOKEN = 'c37a6e641bed1aab2a61cc0ef2a70547ce4cbd1e'
+    GITHUB_TOKEN = 'add yours here'
     
     repos = [('dmlc', 'mxnet'),
              ('fchollet', 'keras'),
