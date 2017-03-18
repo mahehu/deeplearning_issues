@@ -11,7 +11,7 @@ import numpy as np
 
 if __name__ == "__main__":
     
-    GITHUB_TOKEN = 'c37a6e641bed1aab2a61cc0ef2a70547ce4cbd1e'
+    GITHUB_TOKEN = 'a068a94c3e78f4cf1426ac6b5cde551edb5740e4'
     
     repos = [('dmlc', 'mxnet'),
              ('fchollet', 'keras'),
@@ -19,7 +19,8 @@ if __name__ == "__main__":
              ('BVLC', 'caffe'),
              #('PaddlePaddle', 'Paddle'),
              ('pytorch', 'pytorch'),
-             #('torch', 'torch7'),
+             ('vlfeat', 'matconvnet'),
+             ('torch', 'torch7')
              #('deeplearning4j', 'deeplearning4j'),
              #('Microsoft', 'CNTK'),
              #('Theano', 'Theano')
@@ -37,6 +38,9 @@ if __name__ == "__main__":
 
     fig, ax = plt.subplots()
 
+    # Store numbers of issues in the current quarter here
+    current_issues = dict()
+
     for org, repo in repos:
 
         issues = dict()
@@ -45,11 +49,7 @@ if __name__ == "__main__":
             year = i.created_at.year
             month = i.created_at.month
             quarter = int(np.ceil(month / 3.0))
-
-            #if year == current_year and quarter == current_quarter:
-            #    # Skip current quarter issues as it is not complete.
-            #    continue
-        
+            
             if year == 2014:
                 break
             
@@ -63,7 +63,11 @@ if __name__ == "__main__":
                 issues[key] = 1
                 print("\n{}/{}: collecting issues for Q{}/{}: {}...".format(org, 
                       repo, quarter, year, issues[key]), end = "\r")
-        
+
+            if year == current_year and quarter == current_quarter:
+                # Store number of issues this quarter
+                current_issues[org + "/" + repo] = issues[key]
+                
         order = np.argsort(issues.keys())
         dates    = [issues.keys()[k] for k in order]
         activity = [issues.values()[k] for k in order]
@@ -82,4 +86,16 @@ if __name__ == "__main__":
     # axes up to make room for them
     fig.autofmt_xdate()
     plt.ylabel('Quarterly Issues')
+    plt.savefig("deeplearning_issues.pdf", bbox_inches = "tight")
+    plt.savefig("deeplearning_issues.png", bbox_inches = "tight")
+    
+    # List current situation:
+    print("\n" + "-" * 20)
+    print("Share of issues:")
+    
+    total_curr_issues = np.sum(current_issues.values())
+    for key in current_issues.keys():
+        print("{:21} {:4.1f} %".format(key, 100.0 * current_issues[key] / 
+             total_curr_issues))
+    
     plt.show()
