@@ -10,8 +10,8 @@ import datetime
 import numpy as np
 
 if __name__ == "__main__":
-    
-    GITHUB_TOKEN = 'a068a94c3e78f4cf1426ac6b5cde551edb5740e4'
+
+    GITHUB_TOKEN = 'add yours here'
     
     repos = [('dmlc', 'mxnet'),
              ('fchollet', 'keras'),
@@ -99,3 +99,4 @@ if __name__ == "__main__":
              total_curr_issues))
     
     plt.show()
+
