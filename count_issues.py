@@ -11,7 +11,7 @@ import numpy as np
 
 if __name__ == "__main__":
 
-    GITHUB_TOKEN = 'add yours here'
+    GITHUB_TOKEN = 'e5151b6f7059ebb9628018024f096c8330ff646d'
     
     repos = [('dmlc', 'mxnet'),
              ('fchollet', 'keras'),
@@ -71,7 +71,7 @@ if __name__ == "__main__":
         order = np.argsort(issues.keys())
         dates    = [issues.keys()[k] for k in order]
         activity = [issues.values()[k] for k in order]
-        ax.plot(dates, activity, label = "{}/{}".format(org, repo))
+        ax.plot(dates, activity, label = "{}/{}".format(org, repo), linewidth = 2)
         
         # format the ticks
         ax.xaxis.set_major_locator(years)
@@ -86,6 +86,7 @@ if __name__ == "__main__":
     # axes up to make room for them
     fig.autofmt_xdate()
     plt.ylabel('Quarterly Issues')
+    plt.title("Graph updated %s" % datetime.datetime.now().strftime("%B %d, %Y"))
     plt.savefig("deeplearning_issues.pdf", bbox_inches = "tight")
     plt.savefig("deeplearning_issues.png", bbox_inches = "tight")
     
